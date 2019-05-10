@@ -1,8 +1,31 @@
 class InputValidator{
-    constructor(selector){
-        console.log('inputValidator() set on: ', selector);
 
-        this.setuplListeners()
+    // a static method is a method (aka function) that can only be called if attactched to its class aka InputValidator/RquiredFieldValidator etc
+    //when the init() method is called, it will create a *this* keyword to represent the lass that called it. InputValdiator.init() makes *this* = InputValdiator.  RequiredFieldValidator.init() makes *this* = RequredFieldValidator
+    static init(selector){
+        console.log ('Invalidator.init() - I am a static method')
+
+        //select ALL nodes with selector parameter and put them into an array
+        const $fields = document.querySelectorAll(selector)
+       
+        // in the $fields array, for each selector paramter (field), do this thing.
+        $fields.forEach(($field)=> {
+            // new RequiredFieldValidator('[data-required')
+             new this($field)
+             // const instance = new this($field) optional variable wrapping
+        })
+    }
+
+
+    constructor(domElement){
+        console.log('inputValidator() set on: ', domElement);
+
+        this.$field= domElement;
+        
+        //an empty array to collect error messages (see req-field)
+        this.errors = [];
+
+        this.setupListeners()
         this.validate()
         this.showErrors()
     }
@@ -11,13 +34,49 @@ class InputValidator{
         console.log('InputValidator.validate')
 
     }
-    setuplListeners= () => {
+    setupListeners= () => {
             console.log('InputValidator.setupListeners')
+
+
+            // on keyup, both aEL will run in the order they were written. 
+
+            // each child class (reqField, formVal) has thier own validator() fucnction insde them with different instructions.
+            //on 'keyup' determine which *this* aka child class is being referred to and runs that verson of thier validator() function
+            //It does not run immediately because *this* has a changing value and we do not want to bind the function until we know which child class *this* is referring to.
+            
+            this.$field.addEventListener('keyup', ()=> this.validate())
+            
+            //this.showErrors binds the callback function waiting below immediatley to the current *this* value.
+            //this.showErrors does not use () because we are not running it, just binding it so we know what function to to run later 
+
+            this.$field.addEventListener('keyup', this.showErrors)
+
+           
         
     }
 
     showErrors = () => {
-        console.log('InputValidator.showErrors')
         
+        let previousError = document.querySelector('.errors');
+        console.log(" this is", previousError)
+
+        if(previousError !== null){
+            document.body.removeChild(previousError);
+
+        }
+
+        let errorBox = document.createElement("div");
+        errorBox.classList.add('errors')
+        errorBox.innerHTML = this.errors;
+        document.body.append(errorBox);
+
+        if(errorBox.innerHTML){
+            this.$field.style.border = '1px solid red';
+        } 
+
+        console.log('InputValidator.showErrors', this.errors);
+       
     }
 }
+
+

@@ -22,24 +22,35 @@ var RequiredFieldValidator =
 function (_InputValidator) {
   _inherits(RequiredFieldValidator, _InputValidator);
 
-  function RequiredFieldValidator(selector) {
+  function RequiredFieldValidator(domElement) {
     var _this;
 
     _classCallCheck(this, RequiredFieldValidator);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(RequiredFieldValidator).call(this, selector)); // super() is a keyword that passes through 'selector', the parameter from the parent constructor  
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(RequiredFieldValidator).call(this, domElement)); // super() is a keyword that passes through 'domElement', the parameter from the parent constructor (InputValidator) 
 
     _defineProperty(_assertThisInitialized(_this), "validate", function () {
-      console.log('RequiredFieldValidator.validate');
+      console.log('RequiredFieldValidator.validate', _this.$field);
+      _this.errors = [];
+
+      if (_this.$field.value) {
+        console.log('valid!');
+      } else {
+        //if it has no value
+        console.log('invalid'); //add this message to the this.errors array (see InpuValidator)
+
+        _this.errors.push('This field is required.');
+      }
     });
 
-    console.log('req-field-Validator()activated for: ', selector);
+    console.log('req-field-Validator()activated for: ', domElement);
     return _this;
   } // a child class(RFV) MUST have a "validate" function to estaliblsh a convention 
 
 
   return RequiredFieldValidator;
-}(InputValidator); // RequiredFieldValidator(RFV) extends into InputValidator(IV), 
+}(InputValidator); // super(domElement)
+// RequiredFieldValidator(RFV) extends into InputValidator(IV), 
 //the product of IV will be set into a *this* variable, allowing it to be accessible in any function that inherits it.  
-//uper() is a keyword that passes through 'selector', the parameter from the parent constructor a.k.a the function paramater behing inherited from
+//super() is a keyword that passes through 'domElement', the parameter from the parent constructor a.k.a the function paramater behing inherited from
 //# sourceMappingURL=req-field-validator.js.map
