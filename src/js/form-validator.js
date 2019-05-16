@@ -9,5 +9,7 @@ class FormValidator{
 
         //use the statc method init() to pass the selector, using the static method as its entry into the next constructor
         RequiredFieldValidator.init('[data-required]');
+        RequiredCharValidator.init('[data-required="characters"]', ["@","&"]);
+
     }
 }

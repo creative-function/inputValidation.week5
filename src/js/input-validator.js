@@ -1,8 +1,9 @@
 class InputValidator{
 
     // a static method is a method (aka function) that can only be called if attactched to its class aka InputValidator/RquiredFieldValidator etc
-    //when the init() method is called, it will create a *this* keyword to represent the lass that called it. InputValdiator.init() makes *this* = InputValdiator.  RequiredFieldValidator.init() makes *this* = RequredFieldValidator
-    static init(selector){
+    //when the init() method is called, it will create a *this* keyword to represent the class that called it. InputValdiator.init() makes *this* = InputValdiator.  RequiredFieldValidator.init() makes *this* = RequredFieldValidator
+    //the static init must have an "options" argument (variable name) so that other constructors can add arguments for their own specific needs later on
+    static init(selector, options){
         console.log ('Invalidator.init() - I am a static method')
 
         //select ALL nodes with selector parameter and put them into an array
@@ -10,8 +11,8 @@ class InputValidator{
        
         // in the $fields array, for each selector paramter (field), do this thing.
         $fields.forEach(($field)=> {
-            // new RequiredFieldValidator('[data-required')
-             new this($field)
+            // new RequiredFieldValidator($field = '[data-required' , options = variable/argument placeholder (being passed through and will be executed by the validator that finds a need/use for it) )
+             new this($field, options)
              // const instance = new this($field) optional variable wrapping
         })
     }
