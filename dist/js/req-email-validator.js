@@ -16,49 +16,51 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var RequiredCharValidator =
+var RequiredEmailValidator =
 /*#__PURE__*/
 function (_InputValidator) {
-  _inherits(RequiredCharValidator, _InputValidator);
+  _inherits(RequiredEmailValidator, _InputValidator);
 
   //in this constructor we have a second parameter (allowed to exist because inputVaidator has a 2nd optional parameter called options)
-  function RequiredCharValidator(domElement, charactersToCheck) {
+  function RequiredEmailValidator(domElement, emailToCheck) {
     var _this;
 
-    _classCallCheck(this, RequiredCharValidator);
+    _classCallCheck(this, RequiredEmailValidator);
 
     //super "call" the domElement constructor that is in InputValidator [constructor(domElement)]
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(RequiredCharValidator).call(this, domElement)); //remember *this* variable
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(RequiredEmailValidator).call(this, domElement)); //remember *this* variable
 
     _defineProperty(_assertThisInitialized(_this), "validate", function () {
-      console.log('RequiredCharValidator.validate', _this.$field);
+      console.log('RequiredEmailValidator.validate', _this.$field);
       _this.errors = [];
-      var secret = _this.$field.value; //default setting so error message will apply automatically
+      var email = _this.$field.value; //regExp= regular expression. searches for patterns. 
+      //this one says "any amount of charcters(\\w+)" 
+      //the @ symbol any amount of charcters(\\w+)" 
+      //any instance of .(\\.)""
 
-      var found = false; //characterstoCheck is in an array so for each character in that array, do this:
+      var eVerify = new RegExp('\\w+@\\w+\\.'); //default setting so error message will apply automatically
 
-      _this.charactersToCheck.forEach(function (character) {
-        //if secret contains a character in its index
-        if (secret.indexOf(character) > -1) {
-          console.log("secret is true: " + secret);
-          found = true; //switch found to true to the next if statement no longer applies. 
-        } else {
-          //if it does not find a value
-          console.log('invalid');
-        }
-      });
+      var found = false;
+
+      if (eVerify.exec(email)) {
+        found = true;
+        console.log('found a match');
+      } else {
+        console.log('try again');
+        console.log("eVerify is: " + eVerify);
+      }
 
       if (found == false) {
         //add this message to the this.errors array (see InpuValidator)
-        _this.errors.push('One or more special character is required.');
+        _this.errors.push('A functional email address is required.');
       }
     });
 
-    _this.charactersToCheck = charactersToCheck;
-    console.log('RequiredCharValidator()', domElement, charactersToCheck);
+    _this.emailToCheck = emailToCheck;
+    console.log('RequiredEmailValidator()', domElement, emailToCheck);
     return _this;
   }
 
-  return RequiredCharValidator;
+  return RequiredEmailValidator;
 }(InputValidator);
-//# sourceMappingURL=req-char-validator.js.map
+//# sourceMappingURL=req-email-validator.js.map

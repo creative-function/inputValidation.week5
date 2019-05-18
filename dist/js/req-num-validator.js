@@ -16,49 +16,57 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var RequiredCharValidator =
+var RequiredNumberValidator =
 /*#__PURE__*/
 function (_InputValidator) {
-  _inherits(RequiredCharValidator, _InputValidator);
+  _inherits(RequiredNumberValidator, _InputValidator);
 
   //in this constructor we have a second parameter (allowed to exist because inputVaidator has a 2nd optional parameter called options)
-  function RequiredCharValidator(domElement, charactersToCheck) {
+  function RequiredNumberValidator(domElement, numbersToCheck) {
     var _this;
 
-    _classCallCheck(this, RequiredCharValidator);
+    _classCallCheck(this, RequiredNumberValidator);
 
     //super "call" the domElement constructor that is in InputValidator [constructor(domElement)]
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(RequiredCharValidator).call(this, domElement)); //remember *this* variable
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(RequiredNumberValidator).call(this, domElement)); //remember *this* variable
 
     _defineProperty(_assertThisInitialized(_this), "validate", function () {
-      console.log('RequiredCharValidator.validate', _this.$field);
+      console.log('RequiredNumberValidator.validate', _this.$field);
       _this.errors = [];
-      var secret = _this.$field.value; //default setting so error message will apply automatically
+      var ageInput = _this.$field.value;
+      var first = _this.numbersToCheck[0]; //5
 
-      var found = false; //characterstoCheck is in an array so for each character in that array, do this:
+      var last = _this.numbersToCheck[_this.numbersToCheck.length - 1]; //10
 
-      _this.charactersToCheck.forEach(function (character) {
-        //if secret contains a character in its index
-        if (secret.indexOf(character) > -1) {
-          console.log("secret is true: " + secret);
-          found = true; //switch found to true to the next if statement no longer applies. 
-        } else {
-          //if it does not find a value
-          console.log('invalid');
-        }
-      });
+      console.log("first is: " + first);
+      console.log("input is: " + ageInput);
+      console.log("last is: " + last); //default setting so error message will apply automatically
+
+      var found = false;
+
+      if (ageInput > last) {
+        console.log(ageInput + ' is TOO BIG to be between ' + first + ' and ' + last);
+      } else if (first > ageInput) {
+        console.log(ageInput + ' is TOO SMALL to be between ' + first + ' and ' + last);
+      } else {
+        found = true;
+
+        _this.errors.push('you good, bro.');
+
+        console.log(ageInput + ' is between ' + first + ' and ' + last);
+      }
 
       if (found == false) {
         //add this message to the this.errors array (see InpuValidator)
-        _this.errors.push('One or more special character is required.');
+        _this.errors.push('A legal age is required.');
       }
     });
 
-    _this.charactersToCheck = charactersToCheck;
-    console.log('RequiredCharValidator()', domElement, charactersToCheck);
+    _this.numbersToCheck = numbersToCheck;
+    console.log('RequiredNumberValidator()', domElement, numbersToCheck);
     return _this;
   }
 
-  return RequiredCharValidator;
+  return RequiredNumberValidator;
 }(InputValidator);
-//# sourceMappingURL=req-char-validator.js.map
+//# sourceMappingURL=req-num-validator.js.map
