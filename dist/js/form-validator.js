@@ -13,6 +13,7 @@ var FormValidator = function FormValidator() {
   RequiredFieldValidator.init('[data-required]');
   RequiredCharValidator.init('[data-required="characters"]', ["%"]);
   RequiredEmailValidator.init('[data-validate="email"]');
-  RequiredNumberValidator.init('[data-validate="number"]', ['21', '25']);
+  RequiredPhoneValidator.init('[data-required="phone"]');
+  RequiredNumberValidator.init('[data-validate="number"]', ['18', '25']);
 };
 //# sourceMappingURL=form-validator.js.map

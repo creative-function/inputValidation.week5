@@ -50,7 +50,7 @@ function (_InputValidator) {
 
       if (found == false) {
         //add this message to the this.errors array (see InpuValidator)
-        _this.errors.push('One or more special character is required.');
+        _this.errors.push('the special character is % ');
       }
     });
 

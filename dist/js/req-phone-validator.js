@@ -16,54 +16,61 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var RequiredNumberValidator =
+var RequiredPhoneValidator =
 /*#__PURE__*/
 function (_InputValidator) {
-  _inherits(RequiredNumberValidator, _InputValidator);
+  _inherits(RequiredPhoneValidator, _InputValidator);
 
   //in this constructor we have a second parameter (allowed to exist because inputVaidator has a 2nd optional parameter called options)
-  function RequiredNumberValidator(domElement, numbersToCheck) {
+  function RequiredPhoneValidator(domElement, phoneToCheck) {
     var _this;
 
-    _classCallCheck(this, RequiredNumberValidator);
+    _classCallCheck(this, RequiredPhoneValidator);
 
     //super "call" the domElement constructor that is in InputValidator [constructor(domElement)]
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(RequiredNumberValidator).call(this, domElement)); //remember *this* variable
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(RequiredPhoneValidator).call(this, domElement)); //remember *this* variable
 
     _defineProperty(_assertThisInitialized(_this), "validate", function () {
-      console.log('RequiredNumberValidator.validate', _this.$field);
+      console.log('RequiredPhoneValidator.validate', _this.$field);
       _this.errors = [];
-      var ageInput = _this.$field.value;
-      var first = _this.numbersToCheck[0]; //5
+      var phone = _this.$field.value;
+      /*Within non-capturing parentheses (?: , 
+      the regular expression looks for three numeric characters \d{3} 
+      OR |
+      a left parenthesis \( 
+      followed by three digits \d{3},
+      followed by a close parenthesis \), 
+      (end non-capturing parenthesis )), 
+      followed by one dash, forward slash, 
+      or decimal point and when found, 
+      remember the character ([-\/\.]), 
+      followed by three digits \d{3}, 
+      followed by the remembered match of a dash, forward slash, or decimal point \1, 
+      followed by four digits \d{4}.*/
 
-      var last = _this.numbersToCheck[_this.numbersToCheck.length - 1]; //10
-
-      console.log("first is: " + first);
-      console.log("input is: " + ageInput);
-      console.log("last is: " + last); //default setting so error message will apply automatically
+      var pVerify = /(?:\d{3}|\(\d{3}\))([-\/\.])\d{3}\1\d{4}/; //default setting so error message will apply automatically
 
       var found = false;
 
-      if (ageInput > last) {
-        console.log(ageInput + ' is TOO BIG to be between ' + first + ' and ' + last);
-      } else if (first > ageInput) {
-        console.log(ageInput + ' is TOO SMALL to be between ' + first + ' and ' + last);
-      } else {
+      if (pVerify.exec(phone)) {
         found = true;
-        console.log(ageInput + ' is between ' + first + ' and ' + last);
+        console.log('found a match');
+      } else {
+        console.log('try again');
+        console.log("pVerify is: " + pVerify);
       }
 
       if (found == false) {
         //add this message to the this.errors array (see InpuValidator)
-        _this.errors.push('An age between ' + first + ' and ' + last + ' is required.');
+        _this.errors.push('A functional phone number is required.');
       }
     });
 
-    _this.numbersToCheck = numbersToCheck;
-    console.log('RequiredNumberValidator()', domElement, numbersToCheck);
+    _this.phoneToCheck = phoneToCheck;
+    console.log('RequiredPhoneValidator()', domElement, phoneToCheck);
     return _this;
   }
 
-  return RequiredNumberValidator;
+  return RequiredPhoneValidator;
 }(InputValidator);
-//# sourceMappingURL=req-num-validator.js.map
+//# sourceMappingURL=req-phone-validator.js.map

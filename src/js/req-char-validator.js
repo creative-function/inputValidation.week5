@@ -37,7 +37,7 @@ class RequiredCharValidator extends InputValidator{
         
         if(found == false){
             //add this message to the this.errors array (see InpuValidator)
-            this.errors.push('One or more special character is required.' ); 
+            this.errors.push('the special character is % ' ); 
        }
 
     }

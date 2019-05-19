@@ -56,19 +56,30 @@ function () {
 
     _defineProperty(this, "showErrors", function () {
       var previousError = document.querySelector('.errors');
-      console.log(" this is", previousError);
 
       if (previousError !== null) {
         document.body.removeChild(previousError);
       }
 
+      var fieldPosition = _this2.$field.getBoundingClientRect();
+
       var errorBox = document.createElement("div");
       errorBox.classList.add('errors');
       errorBox.innerHTML = _this2.errors;
       document.body.append(errorBox);
+      errorBox.style.position = "absolute"; // errorBox.style.height = "25" + "px";
+
+      errorBox.style.borderRadius = '10px';
+      errorBox.style.padding = '5px';
+      errorBox.style.boxShadow = '0 5px 10px rgba(0,0,0,0.5)';
+      errorBox.style.top = fieldPosition.top + 'px';
+      errorBox.style.left = fieldPosition.right + 'px';
 
       if (errorBox.innerHTML) {
-        _this2.$field.style.border = '1px solid red';
+        _this2.$field.style.backgroundColor = 'pink';
+      } else {
+        _this2.$field.style.backgroundColor = 'white';
+        errorBox.style.display = 'none';
       }
 
       console.log('InputValidator.showErrors', _this2.errors);

@@ -37,13 +37,12 @@ class RequiredNumberValidator extends InputValidator{
             console.log(ageInput + ' is TOO SMALL to be between ' + first + ' and ' + last)
         }else{
            found = true;
-           this.errors.push('you good, bro.' ); 
            console.log(ageInput + ' is between ' + first + ' and ' + last)
        }
         
         if(found == false){
             //add this message to the this.errors array (see InpuValidator)
-            this.errors.push('A legal age is required.' ); 
+            this.errors.push('An age between ' +  first  + ' and ' + last + ' is required.' ); 
        }
 
     }

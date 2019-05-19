@@ -59,20 +59,33 @@ class InputValidator{
     showErrors = () => {
         
         let previousError = document.querySelector('.errors');
-        console.log(" this is", previousError)
-
+        
         if(previousError !== null){
             document.body.removeChild(previousError);
 
         }
+
+        let fieldPosition = this.$field.getBoundingClientRect()
+
 
         let errorBox = document.createElement("div");
         errorBox.classList.add('errors')
         errorBox.innerHTML = this.errors;
         document.body.append(errorBox);
 
+        errorBox.style.position = "absolute";
+        // errorBox.style.height = "25" + "px";
+        errorBox.style.borderRadius = '10px'
+        errorBox.style.padding = '5px'
+        errorBox.style.boxShadow = '0 5px 10px rgba(0,0,0,0.5)'
+        errorBox.style.top = fieldPosition.top + 'px';
+        errorBox.style.left = fieldPosition.right + 'px';
+
         if(errorBox.innerHTML){
-            this.$field.style.border = '1px solid red';
+            this.$field.style.backgroundColor = 'pink';
+        }else{
+            this.$field.style.backgroundColor = 'white';
+            errorBox.style.display ='none';
         } 
 
         console.log('InputValidator.showErrors', this.errors);
